@@ -9,7 +9,7 @@ import {
 import * as etherscan from "src/providers/Etherscan"
 import * as ethplorer from "src/providers/Ethplorerer"
 import duel, { Duel, sumMerge } from "./duel"
-import getRates, { celoPrice } from "./rates"
+import getRates, { candlePrice } from "./rates"
 import { getOrSave } from "src/service/cache"
 import { MINUTE } from "src/utils/TIME"
 import { TokenModel, Tokens } from "./Data"
@@ -69,7 +69,7 @@ export async function erc20OnEthereumBalance(token: Tokens) {
   return getOrSave<Duel>(`${token}-balance`, () => fetchERC20OnEthereumBalance(token), 10 * MINUTE)
 }
 
-export async function celoCustodiedBalance() {
+export async function candleCustodiedBalance() {
   return getOrSave<ProviderSource>("candle-custody-balance", getInCustodyBalance, 5 * MINUTE)
 }
 
@@ -77,11 +77,11 @@ export async function cMC02Balance() {
   return getOrSave<ProviderSource>("cmc02-balance", getcMC02Balance, 10 * MINUTE)
 }
 
-export async function celoFrozenBalance() {
+export async function candleFrozenBalance() {
   return getOrSave<ProviderSource>("candle-frozen-balance", getFrozenBalance, 5 * MINUTE)
 }
 
-export async function celoUnfrozenBalance() {
+export async function candleUnfrozenBalance() {
   return getOrSave<ProviderSource>("candle-unfrozen-balance", getUnFrozenBalance, 2 * MINUTE)
 }
 
@@ -95,43 +95,43 @@ export interface HoldingsApi {
 }
 
 export async function getHoldingsCandle() {
-  const [celoRate, celoCustodied, frozen, unfrozen] = await Promise.all([
-    celoPrice(),
-    celoCustodiedBalance(),
-    celoFrozenBalance(),
-    celoUnfrozenBalance(),
+  const [candleRate, candleCustodied, frozen, unfrozen] = await Promise.all([
+    candlePrice(),
+    candleCustodiedBalance(),
+    candleFrozenBalance(),
+    candleUnfrozenBalance(),
   ])
 
-  return { candle: toCeloShape(frozen, celoRate, unfrozen, celoCustodied) }
+  return { candle: toCandleShape(frozen, candleRate, unfrozen, candleCustodied) }
 }
 
-function toCeloShape(
+function toCandleShape(
   frozen: ProviderSource,
-  celoRate: Duel,
+  candleRate: Duel,
   unfrozen: ProviderSource,
-  celoCustodied: ProviderSource
+  candleCustodied: ProviderSource
 ) {
   return {
     frozen: {
       token: Token.CANDLE,
       units: frozen.value,
-      value: frozen.value * celoRate.value,
+      value: frozen.value * candleRate.value,
       hasError: frozen.hasError,
       updated: frozen.time,
     },
     unfrozen: {
       token: Token.CANDLE,
       units: unfrozen.value,
-      value: unfrozen.value * celoRate.value,
+      value: unfrozen.value * candleRate.value,
       hasError: unfrozen.hasError,
       updated: unfrozen.time,
     },
     custody: {
       token: Token.CANDLE,
-      units: celoCustodied.value,
-      value: celoCustodied.value * celoRate.value,
-      hasError: celoCustodied.hasError,
-      updated: celoCustodied.time,
+      units: candleCustodied.value,
+      value: candleCustodied.value * candleRate.value,
+      hasError: candleCustodied.hasError,
+      updated: candleCustodied.time,
     },
   } as const
 }
@@ -162,16 +162,16 @@ export async function getHoldingsOther() {
 }
 
 export default async function getHoldings(): Promise<HoldingsApi> {
-  const [rates, btcHeld, ethHeld, daiHeld, usdcHeld, celoCustodied, frozen, unfrozen, cmco2Held] =
+  const [rates, btcHeld, ethHeld, daiHeld, usdcHeld, candleCustodied, frozen, unfrozen, cmco2Held] =
     await Promise.all([
       getRates(),
       btcBalance(),
       ethBalance(),
       erc20OnEthereumBalance("DAI"),
       erc20OnEthereumBalance("USDC"),
-      celoCustodiedBalance(),
-      celoFrozenBalance(),
-      celoUnfrozenBalance(),
+      candleCustodiedBalance(),
+      candleFrozenBalance(),
+      candleUnfrozenBalance(),
       cMC02Balance(),
     ])
 
@@ -184,7 +184,7 @@ export default async function getHoldings(): Promise<HoldingsApi> {
   ]
 
   return {
-    candle: toCeloShape(frozen, rates.candle, unfrozen, celoCustodied),
+    candle: toCandleShape(frozen, rates.candle, unfrozen, candleCustodied),
     otherAssets,
   }
 }

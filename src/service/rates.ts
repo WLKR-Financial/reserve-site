@@ -41,13 +41,13 @@ export async function fiatPrices() {
   return getOrSave<Cachable<ISO427SYMBOLS>>("fiat-prices", currencyInUSD, 12 * HOUR)
 }
 
-async function fetchCELOPrice() {
+async function fetchCANDLEPrice() {
   const price = await duel(getCandlePrice(), coinbase.getCELOPrice())
   return price
 }
 
-export async function celoPrice() {
-  return getOrSave<Duel>("candle-price", fetchCELOPrice, 1 * MINUTE)
+export async function candlePrice() {
+  return getOrSave<Duel>("candle-price", fetchCANDLEPrice, 1 * MINUTE)
 }
 
 async function fetchCStablePrice(currencySymbol: Tokens): Promise<Duel> {
@@ -67,7 +67,7 @@ export default async function rates() {
   const [btc, eth, candle, cmco2] = await Promise.all([
     btcPrice(),
     ethPrice(),
-    celoPrice(),
+    candlePrice(),
     CMC02Price(),
   ])
 
