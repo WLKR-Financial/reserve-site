@@ -15,7 +15,7 @@ export default function ReserveAddresses(props: Props) {
       {props.addresses.map(({ addresses, label, token }) => {
         return <TokenDisplay key={label} token={token} label={label} addresses={addresses} />
       })}
-      <Button href="https://docs.celo.org/command-line-interface/reserve">
+      <Button href="https://docs.candle.org/command-line-interface/reserve">
         Query Reserve Holdings
       </Button>
     </>

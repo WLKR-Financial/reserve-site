@@ -11,7 +11,7 @@ enum KeyAsHuman {
 enum TokenColor {
   BTC = colors.orange,
   ETH = colors.purpleGray,
-  CELO = colors.gold,
+  CANDLE = colors.gold,
   "stable-value" = colors.blue,
   DAI = colors.blue,
   USDC = colors.lightBlue,
@@ -53,7 +53,7 @@ export default function PieChart({ slices, label, showFinePrint, isLoading }: Pr
             <br />
             <small>
               Target allocation is dynamic and a function of cStables in circulation.{" "}
-              <a href="https://celo.stake.id/#/proposal/62" target="_blank">
+              <a href="https://candle.stake.id/#/proposal/62" target="_blank">
                 More info
               </a>
             </small>

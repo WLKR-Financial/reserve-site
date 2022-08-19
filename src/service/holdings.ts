@@ -5,7 +5,7 @@ import {
   getInCustodyBalance,
   getUnFrozenBalance,
   getcMC02Balance,
-} from "src/providers/Celo"
+} from "src/providers/Candle"
 import * as etherscan from "src/providers/Etherscan"
 import * as ethplorer from "src/providers/Ethplorerer"
 import duel, { Duel, sumMerge } from "./duel"
@@ -70,7 +70,7 @@ export async function erc20OnEthereumBalance(token: Tokens) {
 }
 
 export async function celoCustodiedBalance() {
-  return getOrSave<ProviderSource>("celo-custody-balance", getInCustodyBalance, 5 * MINUTE)
+  return getOrSave<ProviderSource>("candle-custody-balance", getInCustodyBalance, 5 * MINUTE)
 }
 
 export async function cMC02Balance() {
@@ -78,15 +78,15 @@ export async function cMC02Balance() {
 }
 
 export async function celoFrozenBalance() {
-  return getOrSave<ProviderSource>("celo-frozen-balance", getFrozenBalance, 5 * MINUTE)
+  return getOrSave<ProviderSource>("candle-frozen-balance", getFrozenBalance, 5 * MINUTE)
 }
 
 export async function celoUnfrozenBalance() {
-  return getOrSave<ProviderSource>("celo-unfrozen-balance", getUnFrozenBalance, 2 * MINUTE)
+  return getOrSave<ProviderSource>("candle-unfrozen-balance", getUnFrozenBalance, 2 * MINUTE)
 }
 
 export interface HoldingsApi {
-  celo: {
+  candle: {
     unfrozen: TokenModel
     frozen: TokenModel
     custody: TokenModel
@@ -94,7 +94,7 @@ export interface HoldingsApi {
   otherAssets: TokenModel[]
 }
 
-export async function getHoldingsCelo() {
+export async function getHoldingsCandle() {
   const [celoRate, celoCustodied, frozen, unfrozen] = await Promise.all([
     celoPrice(),
     celoCustodiedBalance(),
@@ -102,7 +102,7 @@ export async function getHoldingsCelo() {
     celoUnfrozenBalance(),
   ])
 
-  return { celo: toCeloShape(frozen, celoRate, unfrozen, celoCustodied) }
+  return { candle: toCeloShape(frozen, celoRate, unfrozen, celoCustodied) }
 }
 
 function toCeloShape(
@@ -113,21 +113,21 @@ function toCeloShape(
 ) {
   return {
     frozen: {
-      token: Token.CELO,
+      token: Token.CANDLE,
       units: frozen.value,
       value: frozen.value * celoRate.value,
       hasError: frozen.hasError,
       updated: frozen.time,
     },
     unfrozen: {
-      token: Token.CELO,
+      token: Token.CANDLE,
       units: unfrozen.value,
       value: unfrozen.value * celoRate.value,
       hasError: unfrozen.hasError,
       updated: unfrozen.time,
     },
     custody: {
-      token: Token.CELO,
+      token: Token.CANDLE,
       units: celoCustodied.value,
       value: celoCustodied.value * celoRate.value,
       hasError: celoCustodied.hasError,
@@ -184,7 +184,7 @@ export default async function getHoldings(): Promise<HoldingsApi> {
   ]
 
   return {
-    celo: toCeloShape(frozen, rates.celo, unfrozen, celoCustodied),
+    candle: toCeloShape(frozen, rates.candle, unfrozen, celoCustodied),
     otherAssets,
   }
 }

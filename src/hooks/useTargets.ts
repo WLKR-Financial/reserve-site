@@ -7,7 +7,7 @@ import { HoldingsApi } from "src/service/holdings"
 import { calculateTargetAllocation } from "src/functions/calculateTargetAllocation"
 
 const EMPTY_TARGETS: Allocation[] = [
-  { type: "celo-native-asset" as const, token: "CELO", percent: 0 },
+  { type: "candle-native-asset" as const, token: "CANDLE", percent: 0 },
   { type: "other-crypto-assets" as const, token: "BTC", percent: 0 },
   { type: "other-crypto-assets" as const, token: "ETH", percent: 0 },
   { type: "other-crypto-assets" as const, token: "other", percent: 0 },
@@ -36,7 +36,7 @@ export default function useTargets() {
 }
 
 function getTotalReserveUSD(reserveHoldings: HoldingsApi): number {
-  const { custody, frozen, unfrozen } = reserveHoldings.celo
+  const { custody, frozen, unfrozen } = reserveHoldings.candle
   const totalCelo = custody.value + unfrozen.value + frozen.value
 
   const totalOtherAssets = reserveHoldings.otherAssets.reduce(

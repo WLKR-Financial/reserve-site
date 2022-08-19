@@ -1,4 +1,4 @@
-import { getTargetAllocations } from "src/providers/Celo"
+import { getTargetAllocations } from "src/providers/Candle"
 import { getOrSave } from "./cache"
 import { MINUTE } from "src/utils/TIME"
 

@@ -1,4 +1,4 @@
-import { getCStableSupply } from "src/providers/Celo"
+import { getCStableSupply } from "src/providers/Candle"
 import { fiatPrices } from "src/service/rates"
 import { TokenModel } from "src/service/Data"
 import { getOrSave } from "src/service/cache"

@@ -37,7 +37,7 @@ We use the following sub-processors to operate our services:
     </tr>
     <tbody>
     <tr>
-      <td>Celo Labs Inc.</td>
+      <td>Candle Labs Inc.</td>
       <td>Data Processing</td>
       <td>Germany / US</td>
     </tr>

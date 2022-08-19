@@ -5,7 +5,7 @@ export enum Providers {
   blockchainDotCom = "blockchain.com",
   etherscan = "etherscan",
   ethplorer = "ethplorer",
-  forno = "forno.celo.org",
+  forno = "forno.candle.org",
   ecb = "ecb.europa.eu",
   exchangeRates = "exchangeratesapi.io",
   ubeswap = "ubeswap",

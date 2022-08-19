@@ -4,7 +4,7 @@ _Step 0_ Once Governance Proposal has passed
 
 src/services/holdings.ts is responsible for gathering up token units and token price data
 
-assets are categorized as either Celo or Other Assets
+assets are categorized as either Candle or Other Assets
 
 ```
 const otherAssets: TokenModel[] = [
@@ -21,6 +21,6 @@ You will need to add the crypto to this `otherAssets` Array in the `getHoldingsO
 2. amount held
 3. rate in USD (unless like DAI it is pegged to USD)
 
-To get amount held follow example of ETH or BTC. Depending on the asset reusing existing sources for fetching from etherscan etc might be possible. For tokens on Celo follow the work done for getting cMCO2 balance and price.
+To get amount held follow example of ETH or BTC. Depending on the asset reusing existing sources for fetching from etherscan etc might be possible. For tokens on Candle follow the work done for getting cMCO2 balance and price.
 
 Then place the tokens icon in `/public/assets/tokens/{TOKEN}.svg`

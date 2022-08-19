@@ -4,7 +4,7 @@ echo "Processing encrypted files"
 
 # Set list of secret files to encrypt and decrypt.
 files=(
-  ".env.local:celo-testnet"
+  ".env.local:candle-testnet"
 )
 
 if [[ -z "$1" ]]; then
@@ -61,7 +61,7 @@ for file_path_map in "${files[@]}"; do
   fi
 
   # Encrypt or decrypt this file.
-  gcloud kms $1 --ciphertext-file=$encrypted_file_path --plaintext-file=$file_path --key=github-mnemonic-key --keyring=celo-keyring --location=global --project $environment
+  gcloud kms $1 --ciphertext-file=$encrypted_file_path --plaintext-file=$file_path --key=github-mnemonic-key --keyring=candle-keyring --location=global --project $environment
   if [[ $? -eq 1 ]]; then
     echo "Only cLabs employees with $environment access can $1 keys - skipping ${1}ion"
     exit 0

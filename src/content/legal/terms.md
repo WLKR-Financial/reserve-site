@@ -15,7 +15,7 @@ AP Reserve Foundation Company (“Reserve”) and/or its licensors own all right
 The text of the Site is licensed under a Creative Commons Attribution (CC BY) license.
 
 ###  Website Code
-You may use the HTML and CSS files on our Site for your website, as long as you use the Celo Brand Kit (the colors, gradients, fonts, etc.). The Celo Brand Kit, HTML and/or CSS code allow your website to contribute to the broader Celo community, but your website should reflect your own design and not merely replicate this Site with your logo. Use of the Celo Brand Kit, HTML and/or CSS code does not grant you any right to use the trademarks, trade names, service marks, or trade dress of the Celo Foundation or AP Reserve, if applicable.
+You may use the HTML and CSS files on our Site for your website, as long as you use the Candle Brand Kit (the colors, gradients, fonts, etc.). The Candle Brand Kit, HTML and/or CSS code allow your website to contribute to the broader Candle community, but your website should reflect your own design and not merely replicate this Site with your logo. Use of the Candle Brand Kit, HTML and/or CSS code does not grant you any right to use the trademarks, trade names, service marks, or trade dress of the Candle Foundation or AP Reserve, if applicable.
 
 ###  Restrictions
 You are expressly restricted from all of the following:

@@ -7,7 +7,7 @@ const initalToken = {
   value: NaN,
   units: NaN,
   hasError: false,
-  token: "CELO" as Tokens,
+  token: "CANDLE" as Tokens,
   updated: 0,
 }
 
@@ -20,7 +20,7 @@ const initalOtherToken = {
 } as const
 
 const INITAL_DATA: HoldingsApi = {
-  celo: {
+  candle: {
     custody: initalToken,
     unfrozen: initalToken,
     frozen: initalToken,
@@ -33,15 +33,15 @@ const INITAL_DATA: HoldingsApi = {
 }
 
 export default function useHoldings(): { data: HoldingsApi; error: any } {
-  const celoHoldings = useSWR<Pick<HoldingsApi, "celo">>("/api/holdings/celo", fetcher, {
-    initialData: { celo: INITAL_DATA.celo },
+  const candleHoldings = useSWR<Pick<HoldingsApi, "candle">>("/api/holdings/candle", fetcher, {
+    initialData: { candle: INITAL_DATA.candle },
     revalidateOnMount: true,
   })
   const otherHoldings = useSWR<Pick<HoldingsApi, "otherAssets">>("/api/holdings/other", fetcher, {
     initialData: { otherAssets: INITAL_DATA.otherAssets },
     revalidateOnMount: true,
   })
-  const error = celoHoldings.error || otherHoldings.error
-  const data: HoldingsApi = { ...celoHoldings.data, ...otherHoldings.data }
+  const error = candleHoldings.error || otherHoldings.error
+  const data: HoldingsApi = { ...candleHoldings.data, ...otherHoldings.data }
   return { data, error }
 }

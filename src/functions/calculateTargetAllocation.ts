@@ -1,7 +1,7 @@
 import Allocation, { AssetTypes } from "src/interfaces/allocation"
 
 const EMPTY_TARGETS: Allocation[] = [
-  { type: "celo-native-asset" as const, token: "CELO", percent: 0 },
+  { type: "candle-native-asset" as const, token: "CANDLE", percent: 0 },
   { type: "other-crypto-assets" as const, token: "BTC", percent: 0 },
   { type: "other-crypto-assets" as const, token: "ETH", percent: 0 },
   { type: "stable-value" as const, token: "DAI", percent: 0 },
@@ -36,7 +36,7 @@ export function calculateTargetAllocation(
 
   targetAllocation.forEach((a) => {
     switch (a.type) {
-      case "celo-native-asset":
+      case "candle-native-asset":
         a.percent = getPercent(a.type, celoTarget)
         break
 

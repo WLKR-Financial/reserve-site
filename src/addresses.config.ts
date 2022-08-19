@@ -42,8 +42,8 @@ export default ADDRESSES
 
 export function generateLink(token: Tokens, address: string) {
   switch (token) {
-    case "CELO":
-      return `https://explorer.celo.org/address/${address}/coin_balances`
+    case "CANDLE":
+      return `https://candleexplorer.com/address/${address}/coin_balances`
     case "BTC":
       return `https://blockchain.info/address/${address}`
     case "ETH":

@@ -1,8 +1,8 @@
 # How to add or modify reserve owned addresses
 
-## For Celo assets addresses
+## For Candle assets addresses
 
-Celo Addresses are kept on the reserve contract and are fetch here with the `getOtherReserveAddresses` view function
+Candle Addresses are kept on the reserve contract and are fetch here with the `getOtherReserveAddresses` view function
 
 ## For Assets on Other chains
 

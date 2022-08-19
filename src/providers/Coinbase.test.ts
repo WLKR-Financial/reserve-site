@@ -25,7 +25,7 @@ describe("getETHInUSD", () => {
 })
 
 describe("getCELOPrice", () => {
-  it("returns current price of CELO", async () => {
+  it("returns current price of CANDLE", async () => {
     const price = await getCELOPrice()
     expect(price).toEqual({
       source: "coinbase",

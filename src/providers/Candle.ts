@@ -20,9 +20,9 @@ const MIN_ABI_FOR_GET_BALANCE = [
   },
 ]
 
-const kit = newKit("https://forno.celo.org")
+const kit = newKit("https://forno.candle.org")
 
-export async function getCeloPrice(): Promise<ProviderSource> {
+export async function getCandlePrice(): Promise<ProviderSource> {
   try {
     const exchange = await kit.contracts.getExchange()
     const rate = await exchange.quoteGoldSell(WEI_PER)
@@ -130,8 +130,8 @@ export async function getAddresses(): Promise<{ value: ReserveCrypto[] | null }>
 
     return {
       value: [
-        { label: "Celo Reserve", token: "CELO" as Tokens, addresses: [reserve.address] },
-        { label: "CELO with Custodian", token: "CELO" as Tokens, addresses: addresses },
+        { label: "Candle Reserve", token: "CANDLE" as Tokens, addresses: [reserve.address] },
+        { label: "CANDLE with Custodian", token: "CANDLE" as Tokens, addresses: addresses },
       ],
     }
   } catch {
@@ -153,7 +153,7 @@ export async function getTargetAllocations(): Promise<ProviderSource<Allocation[
 
       const token = symbol.replace(/[^\x20-\x7E]/g, "")
       return {
-        token: token === "cGLD" ? "CELO" : token,
+        token: token === "cGLD" ? "CANDLE" : token,
         // show weight as number; 50 means 50%
         percent: weights[index].dividedBy(WEI_PER * 10000).toNumber(),
         type: getType(token),
@@ -179,7 +179,7 @@ function getType(symbol: string): AssetTypes {
     case "cMCO2":
       return "natural-capital"
     case "cGLD":
-      return "celo-native-asset"
+      return "candle-native-asset"
     default:
       return "other-crypto-assets"
   }

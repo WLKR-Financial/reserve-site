@@ -1,6 +1,6 @@
 import { HoldingsApi } from "src/service/holdings"
-import { sumCeloTotal, sumNonCelo } from "./Holdings"
+import { sumCandleTotal, sumNonCandle } from "./Holdings"
 
 export function sumTotalHoldings(holdings: HoldingsApi) {
-  return sumCeloTotal(holdings) + sumNonCelo(holdings)
+  return sumCandleTotal(holdings) + sumNonCandle(holdings)
 }

@@ -1,17 +1,17 @@
 import {
-  getCeloPrice,
+  getCandlePrice,
   getInCustodyBalance,
   getCStableSupply,
   getUnFrozenBalance,
   getFrozenBalance,
   getTargetAllocations,
-} from "./Celo"
+} from "./Candle"
 
 import { newKit, StableToken } from "@celo/contractkit"
 
-describe("celo", () => {
+describe("candle", () => {
   it("uses contractKit", () => {
-    expect(newKit).toHaveBeenCalledWith("https://forno.celo.org")
+    expect(newKit).toHaveBeenCalledWith("https://forno.candle.org")
   })
 })
 
@@ -20,10 +20,10 @@ describe("getTargetAllocation", () => {
     const allocations = await getTargetAllocations()
     expect(allocations).toEqual({
       hasError: false,
-      source: "forno.celo.org",
+      source: "forno.candle.org",
       time: 1587686400000,
       value: [
-        { percent: 50, token: "CELO", type: "celo-native-asset" },
+        { percent: 50, token: "CANDLE", type: "candle-native-asset" },
         { percent: 29.5, token: "BTC", type: "other-crypto-assets" },
         { percent: 15, token: "ETH", type: "other-crypto-assets" },
         { percent: 5, token: "DAI", type: "stable-value" },
@@ -33,12 +33,12 @@ describe("getTargetAllocation", () => {
   })
 })
 
-describe("getCeloPrice", () => {
+describe("getCandlePrice", () => {
   it("returns account balance of address", async () => {
-    const balance = await getCeloPrice()
+    const balance = await getCandlePrice()
     expect(balance).toEqual({
       hasError: false,
-      source: "forno.celo.org",
+      source: "forno.candle.org",
       time: 1587686400000,
       value: 3.892,
     })
@@ -50,7 +50,7 @@ describe("getCStableSupply", () => {
     const balance = await getCStableSupply(StableToken.cUSD)
     expect(balance).toEqual({
       hasError: false,
-      source: "forno.celo.org",
+      source: "forno.candle.org",
       time: 1587686400000,
       value: 41557073.455407046,
     })
@@ -62,7 +62,7 @@ describe("getInCustodyBalance", () => {
     const balance = await getInCustodyBalance()
     expect(balance).toEqual({
       hasError: false,
-      source: "forno.celo.org",
+      source: "forno.candle.org",
       time: 1587686400000,
       value: 2944998.2492173747,
     })
@@ -74,7 +74,7 @@ describe("getUnFrozenBalance", () => {
     const balance = await getUnFrozenBalance()
     expect(balance).toEqual({
       hasError: false,
-      source: "forno.celo.org",
+      source: "forno.candle.org",
       time: 1587686400000,
       value: 75330631.07819435,
     })
@@ -86,7 +86,7 @@ describe("getFrozenBalance", () => {
     const balance = await getFrozenBalance()
     expect(balance).toEqual({
       hasError: false,
-      source: "forno.celo.org",
+      source: "forno.candle.org",
       time: 1587686400000,
       value: 41313868.61313868,
     })

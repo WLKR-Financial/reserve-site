@@ -1,8 +1,8 @@
 import { HoldingsApi } from "src/service/holdings"
-import { sumNonCelo } from "./Holdings"
+import { sumNonCandle } from "./Holdings"
 
 export function sumLiquidHoldings(holdings: HoldingsApi) {
-  const { custody, unfrozen } = holdings.celo
-  const celoTotal = custody.value + unfrozen.value
-  return celoTotal + sumNonCelo(holdings)
+  const { custody, unfrozen } = holdings.candle
+  const candleTotal = custody.value + unfrozen.value
+  return candleTotal + sumNonCandle(holdings)
 }

@@ -2,7 +2,7 @@ export type AssetTypes =
   | "stable-value"
   | "natural-capital"
   | "other-crypto-assets"
-  | "celo-native-asset"
+  | "candle-native-asset"
 
 interface Allocation {
   percent: number

@@ -11,24 +11,24 @@ import Section from "src/components/Section"
 import { sumTotalHoldings } from "./sumTotalHoldings"
 import useHoldings from "src/hooks/useHoldings"
 
-export function sumCeloTotal(holdings: HoldingsApi) {
-  const { custody, frozen, unfrozen } = holdings.celo
+export function sumCandleTotal(holdings: HoldingsApi) {
+  const { custody, frozen, unfrozen } = holdings.candle
   return custody.value + unfrozen.value + frozen.value
 }
 
-export function sumNonCelo({ otherAssets }: HoldingsApi) {
+export function sumNonCandle({ otherAssets }: HoldingsApi) {
   return otherAssets.reduce((prev, current) => current.value + prev, 0)
 }
 
 function getPercents(holdings: HoldingsApi): ChartData[] {
-  const celoTotal = sumCeloTotal(holdings)
-  const total = celoTotal + sumNonCelo(holdings)
+  const candleTotal = sumCandleTotal(holdings)
+  const total = candleTotal + sumNonCandle(holdings)
 
   function toPercent(value: number) {
     return (value / total) * 100
   }
 
-  return [{ token: "CELO", percent: toPercent(celoTotal) }].concat(
+  return [{ token: "CANDLE", percent: toPercent(candleTotal) }].concat(
     holdings.otherAssets.map((asset) => {
       return {
         token: asset.token,
@@ -46,22 +46,22 @@ function findOldestValueUpdatedAt(data?: HoldingsApi): number {
   return Math.min(
     ...data.otherAssets
       .map((token) => token.updated)
-      .concat([data.celo.custody.updated, data.celo.frozen.updated, data.celo.unfrozen.updated])
+      .concat([data.candle.custody.updated, data.candle.frozen.updated, data.candle.unfrozen.updated])
   )
 }
 
 export default function Holdings() {
   const { data } = useHoldings()
   const percentages = getPercents(data)
-  const isLoadingCelo = data.celo.frozen.updated === 0 || data.celo.unfrozen.updated === 0
+  const isLoadingCandle = data.candle.frozen.updated === 0 || data.candle.unfrozen.updated === 0
   const isLoadingOther = !data.otherAssets.findIndex((coin) => coin.updated === 0)
   const oldestUpdate = findOldestValueUpdatedAt(data)
-  const celo = data.celo
+  const candle = data.candle
 
   return (
     <>
       <Head>
-        <link rel="preload" href="/api/holdings/celo" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/api/holdings/candle" as="fetch" crossOrigin="anonymous" />
         <link rel="preload" href="/api/holdings/other" as="fetch" crossOrigin="anonymous" />
       </Head>
       <Section
@@ -69,7 +69,7 @@ export default function Holdings() {
         subHeading={
           <>
             <DollarDisplay
-              loading={isLoadingCelo || isLoadingOther}
+              loading={isLoadingCandle || isLoadingOther}
               label="Liquidity"
               value={sumTotalHoldings(data)}
             />
@@ -78,32 +78,32 @@ export default function Holdings() {
         }
       >
         <div css={rootStyle}>
-          <Heading title="Celo Assets" gridArea="celo" />
-          {celo.frozen.value > 0 ? (
+          <Heading title="Candle Assets" gridArea="candle" />
+          {candle.frozen.value > 0 ? (
             <Amount
-              iconSrc={"/assets/tokens/CELO.svg"}
+              iconSrc={"/assets/tokens/CANDLE.svg"}
               context="Funds frozen in on-chain Reserve contract"
-              loading={isLoadingCelo}
+              loading={isLoadingCandle}
               label="Frozen"
-              units={celo.frozen.units}
-              value={celo.frozen.value}
+              units={candle.frozen.units}
+              value={candle.frozen.value}
               gridArea="frozen"
             />
           ) : (
-            <div css={hiddenCelo}></div>
+            <div css={hiddenCandle}></div>
           )}
 
           <Amount
-            iconSrc={"/assets/tokens/CELO.svg"}
+            iconSrc={"/assets/tokens/CANDLE.svg"}
             context="Funds in on-chain Reserve contract and in custody"
-            loading={isLoadingCelo}
-            label={celo.frozen.value > 0 ? "Unfrozen" : "CELO"}
-            units={celo.unfrozen.units + celo.custody.units}
-            value={celo.unfrozen.value + celo.custody.value}
+            loading={isLoadingCandle}
+            label={candle.frozen.value > 0 ? "Unfrozen" : "CANDLE"}
+            units={candle.unfrozen.units + candle.custody.units}
+            value={candle.unfrozen.value + candle.custody.value}
             gridArea="unfrozen"
           />
 
-          <Heading title="Non-Celo Crypto Assets" gridArea="crypto" marginTop={30} />
+          <Heading title="Non-Candle Crypto Assets" gridArea="crypto" marginTop={30} />
           {data?.otherAssets?.filter(skipZeros)?.map((asset) => (
             <Amount
               key={asset.token}
@@ -118,7 +118,7 @@ export default function Holdings() {
         <PieChart
           label={"Current Composition"}
           slices={percentages}
-          isLoading={isLoadingCelo || isLoadingOther}
+          isLoading={isLoadingCandle || isLoadingOther}
         />
       </Section>
     </>
@@ -130,14 +130,14 @@ const rootStyle = css({
   gridColumnGap: 20,
   gridRowGap: 12,
   gridAutoColumns: "1fr 1fr 1fr",
-  gridTemplateAreas: `"celo celo celo"
+  gridTemplateAreas: `"candle candle candle"
                     "unfrozen unfrozen frozen"
                     "crypto crypto crypto"
                     "btc eth dai"
                     `,
   [BreakPoints.tablet]: {
     gridAutoColumns: "1fr",
-    gridTemplateAreas: `"celo"
+    gridTemplateAreas: `"candle"
                         "unfrozen"
                         "frozen"
                         "crypto"

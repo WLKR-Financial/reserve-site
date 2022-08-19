@@ -1,7 +1,7 @@
 import * as coinbase from "src/providers/Coinbase"
 import { ISO427SYMBOLS } from "src/interfaces/ISO427SYMBOLS"
 import currencyInUSD from "src/providers/ExchangeRateAPI"
-import { getCeloPrice } from "src/providers/Celo"
+import { getCandlePrice } from "src/providers/Candle"
 import { getEthPrice } from "src/providers/Etherscan"
 import { getOrSave, Cachable } from "src/service/cache"
 import { HOUR, MINUTE } from "src/utils/TIME"
@@ -42,12 +42,12 @@ export async function fiatPrices() {
 }
 
 async function fetchCELOPrice() {
-  const price = await duel(getCeloPrice(), coinbase.getCELOPrice())
+  const price = await duel(getCandlePrice(), coinbase.getCELOPrice())
   return price
 }
 
 export async function celoPrice() {
-  return getOrSave<Duel>("celo-price", fetchCELOPrice, 1 * MINUTE)
+  return getOrSave<Duel>("candle-price", fetchCELOPrice, 1 * MINUTE)
 }
 
 async function fetchCStablePrice(currencySymbol: Tokens): Promise<Duel> {
@@ -64,7 +64,7 @@ export async function tokenPriceInUSD(currencySymbol: Tokens) {
 }
 
 export default async function rates() {
-  const [btc, eth, celo, cmco2] = await Promise.all([
+  const [btc, eth, candle, cmco2] = await Promise.all([
     btcPrice(),
     ethPrice(),
     celoPrice(),
@@ -74,7 +74,7 @@ export default async function rates() {
   return {
     btc,
     eth,
-    celo,
+    candle,
     cmco2,
   }
 }

@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { getHoldingsCelo, getHoldingsOther } from "src/service/holdings"
+import { getHoldingsCandle, getHoldingsOther } from "src/service/holdings"
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === "GET") {
       const start = Date.now()
-      if (req.query.kind === "celo") {
-        const holdings = await getHoldingsCelo()
+      if (req.query.kind === "candle") {
+        const holdings = await getHoldingsCandle()
         res.setHeader("Server-Timing", `ms;dur=${Date.now() - start}`)
         res.json(holdings)
       } else if (req.query.kind === "other") {

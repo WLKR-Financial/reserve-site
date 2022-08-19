@@ -12,24 +12,24 @@ describe("getHoldings", () => {
   })
   it("shows all crypto in the reserve", async () => {
     const holdings = await getHoldings()
-    expect(holdings.celo).toEqual({
+    expect(holdings.candle).toEqual({
       custody: {
         hasError: false,
-        token: "CELO",
+        token: "CANDLE",
         units: 2944998.2492173747,
         updated: 1587686400000,
         value: 11667788.563574316,
       },
       frozen: {
         hasError: false,
-        token: "CELO",
+        token: "CANDLE",
         units: 41313868.61313868,
         updated: 1587686400000,
         value: 163681416.05839413,
       },
       unfrozen: {
         hasError: false,
-        token: "CELO",
+        token: "CANDLE",
         units: 75330631.07819435,
         updated: 1587686400000,
         value: 298452427.2686982,
